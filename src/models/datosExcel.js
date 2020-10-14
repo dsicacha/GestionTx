@@ -1,5 +1,5 @@
 const excel = require("exceljs");
-const estilo = require('../helpers/estiloExcel');
+const estructura = require('../helpers/estructuraExcel');
 const manejoExcel ={};
 
 manejoExcel.crearExcel = (res) => {
@@ -15,10 +15,17 @@ manejoExcel.crearExcel = (res) => {
   /*Crear Hoja de excel*/
   let worksheet = workbook.addWorksheet("Computo");
 
-  estilo.encabezadoComputo(worksheet);
+  /*Asignar estructura  encabezado computo a hoja de excel*/
+  estructura.encabezadoComputo(worksheet);
+
+/*Asignar estructura de comunidad */
+  estructura.community(worksheet,2);
+
+  /**Asignar estructura para Partner producer Aplicacion */
+  estructura.partnerProducerA(worksheet);
 
 
-
+/*Crear Archivo para enviarlo como respuesta del GET*/
  return  workbook.xlsx.write(res);
 };
 

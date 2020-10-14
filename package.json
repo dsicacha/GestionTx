@@ -10,12 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "exceljs": "^4.1.1",
-    "excellentexport": "^3.5.0",
+    "exceljs": "^4.1.1",    
     "express": "^4.17.1",
-    "morgan": "^1.10.0",
-    "msexcel-builder": "0.0.2",
-    "xlsx": "^0.16.8"
+    "morgan": "^1.10.0"   
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
