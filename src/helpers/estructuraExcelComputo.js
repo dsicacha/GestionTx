@@ -92,7 +92,7 @@ estructura.encabezadoComputo = (worksheet) => {
     worksheet,
     celdaTitComputo,
     titulo,
-    estilos.letraComputo,
+    estilos.letraTitPrincipal,
     estilos.fondoAzul,
     estilos.alineacionCentral,
     estilos.border,

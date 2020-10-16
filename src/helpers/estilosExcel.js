@@ -1,7 +1,7 @@
 const excel = require("exceljs");
 const estilos ={};
 
-estilos.letraComputo = {
+estilos.letraTitPrincipal = {
     name: "Arial Black",
     color: { argb: "FFFFFF" },
     family: 2,
@@ -54,6 +54,13 @@ estilos.letraComputo = {
     pattern: "solid",
     fgColor: { argb: "305496" },
     bgColor: { argb: "305496" },
+  };
+
+  estilos.fondoVerde = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "548235" },
+    bgColor: { argb: "548235" },
   };
   
   estilos.fondoCeldaAlerta = {
