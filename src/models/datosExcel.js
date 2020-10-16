@@ -1,5 +1,5 @@
 const excel = require("exceljs");
-const estructura = require('../helpers/estructuraExcel');
+const estructura = require('../helpers/estructuraExcelComputo');
 const manejoExcel ={};
 
 manejoExcel.crearExcel = (res) => {
@@ -22,7 +22,12 @@ manejoExcel.crearExcel = (res) => {
   estructura.community(worksheet,2);
 
   /**Asignar estructura para Partner producer Aplicacion */
+  /*estructura.partnerProducerA(worksheet);*/
   estructura.partnerProducerA(worksheet);
+  estructura.partnerConsumerS(worksheet);
+
+  estructura.RoutingChannel(worksheet);
+  estructura.Accounts(worksheet);
 
 
 /*Crear Archivo para enviarlo como respuesta del GET*/

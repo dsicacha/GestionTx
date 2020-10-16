@@ -12,22 +12,63 @@ var titulosComunidad = {
 };
 
 var titulosPartnerPA = {
-  B19:"Action",
-  C19:"Community",
-  D19:"Partner Name",
-  E19:"Telephone",
-  B21:"Email",
-  C21:"Authentication Type",
-  D21:"User Name",
-  E21:"Password",
-  B23:"Password Policy",
-  C23:"Authentication Host",
-  D23:"Given Name",
-  E23:"Surname",
-  B25:"Partner Role",
-  C25:"Will use either SSH/SFTP or SSH/SCP protocol to initiate connections?",
-  D25:"Will use an Authorized User Key to authenticate?",
-  E25:"Key Name"
+  B19: "Action",
+  C19: "Community",
+  D19: "Partner Name",
+  E19: "Telephone",
+  B21: "Email",
+  C21: "Authentication Type",
+  D21: "User Name",
+  E21: "Password",
+  B23: "Password Policy",
+  C23: "Authentication Host",
+  D23: "Given Name",
+  E23: "Surname",
+  B25: "Partner Role",
+  C25: "Will use either SSH/SFTP or SSH/SCP protocol to initiate connections?",
+  D25: "Will use an Authorized User Key to authenticate?",
+  E25: "Key Name",
+};
+
+var titulosPartnerCS = {
+  B29: "Action",
+  C29: "Community",
+  D29: "Partner Name",
+  E29: "Telephone",
+  B31: "Email",
+  C31: "Authentication Type",
+  D31: "User Name",
+  E31: "Password",
+  B33: "Password Policy",
+  C33: "Authentication Host",
+  D33: "Given Name",
+  E33: "Surname",
+  B35: "Partner Role",
+  C35: "Will use either SSH/SFTP or SSH/SCP protocol to initiate connections?",
+  D35: "Protocol",
+  E35: "Perfil SSH",
+  B37: "Tipo de Transferencia",
+  C37: "Directorio",
+};
+
+var titulosChannel = {
+  B41: "Action",
+  C41: "Routing Channel Template",
+  D41: "Producer",
+  E41: "Consumer",
+};
+
+var titulosAccounts = {
+  B45: "Action",
+  C45: "Authentication Type",
+  D45: "User Id",
+  E45: "Authentication Host",
+  B47_C47: "Groups",
+  D47_E47: "Permissions",
+  B49: "Given Name",
+  C49: "Surname",
+  D49:"Email",
+  E49:"Identity"
 }
 
 const celdaTitComputo = "B1:E3";
@@ -35,6 +76,9 @@ const celdaAlertCampos = "B5:E5";
 const celdaTituloComunnity = "B7:E7";
 const celdaAlertComDoble = "B8:E8";
 const celdaTituloPartnerProducerA = "B18:E18";
+const celdaTituloPartnerConsumerS = "B28:E28";
+const celdaTituloChannel = "B40:E40";
+const celdaTituloAccounts = "B44:E44";
 
 var titulo = "";
 
@@ -186,7 +230,6 @@ estructura.partnerProducerA = (worksheet) => {
   );
 
   for (const celda in titulosPartnerPA) {
-    
     var idCelda = "";
     idCelda = celda.replace("_", ":");
 
@@ -200,10 +243,106 @@ estructura.partnerProducerA = (worksheet) => {
       estilos.border,
       false
     );
-
   }
 
+  return worksheet;
+};
 
+estructura.partnerConsumerS = (worksheet) => {
+  /*Asignar formato para titulo de Partner Producer */
+  titulo = "PARTNER CONSUMER";
+  asignarEstilo(
+    worksheet,
+    celdaTituloPartnerConsumerS,
+    titulo,
+    estilos.letraTitulo,
+    estilos.fondoCeldaTitulo,
+    estilos.alineacionCentral,
+    estilos.border,
+    true
+  );
+
+  for (const celda in titulosPartnerCS) {
+    var idCelda = "";
+    idCelda = celda.replace("_", ":");
+
+    asignarEstilo(
+      worksheet,
+      idCelda,
+      titulosPartnerCS[celda],
+      estilos.letraTituloCeldas,
+      estilos.fondoCeldas,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      false
+    );
+  }
+
+  return worksheet;
+};
+
+estructura.RoutingChannel = (worksheet) => {
+  /*Asignar formato para titulo de Partner Producer */
+  titulo = "ROUTING CHANNEL";
+  asignarEstilo(
+    worksheet,
+    celdaTituloChannel,
+    titulo,
+    estilos.letraTitulo,
+    estilos.fondoCeldaTitulo,
+    estilos.alineacionCentral,
+    estilos.border,
+    true
+  );
+
+  for (const celda in titulosChannel) {
+    var idCelda = "";
+    idCelda = celda.replace("_", ":");
+
+    asignarEstilo(
+      worksheet,
+      idCelda,
+      titulosChannel[celda],
+      estilos.letraTituloCeldas,
+      estilos.fondoCeldas,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      false
+    );
+  }
+
+  return worksheet;
+};
+
+estructura.Accounts = (worksheet) => {
+  /*Asignar formato para titulo de Partner Producer */
+  titulo = "ACCOUNTS";
+  asignarEstilo(
+    worksheet,
+    celdaTituloAccounts,
+    titulo,
+    estilos.letraTitulo,
+    estilos.fondoCeldaTitulo,
+    estilos.alineacionCentral,
+    estilos.border,
+    true
+  );
+
+  for (const celda in titulosAccounts) {
+    var idCelda = "";
+    idCelda = celda.replace("_", ":");
+
+    asignarEstilo(
+      worksheet,
+      idCelda,
+      titulosAccounts[celda],
+      estilos.letraTituloCeldas,
+      estilos.fondoCeldas,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      true
+    );
+  }
 
   return worksheet;
 };
