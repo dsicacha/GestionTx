@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-/*const cors = require('cors');*/
+const cors = require('cors');
 
 
 const app = express();
@@ -15,7 +15,8 @@ app.use(express.urlencoded({extended:false}));
 
 //Routes
 /*app.use("/api/gestionTx",require('./routes/transmisiones.routes'))*/
-app.use("/",require('./routes/Excel.routes'))    
+app.use("/",require('./routes/Excel.routes'));
+app.use("/origen",require('./routes/Origen.routes'))      
 
 
 module.exports = app;
