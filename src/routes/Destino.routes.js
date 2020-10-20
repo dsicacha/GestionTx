@@ -1,17 +1,15 @@
 const { Router } = require('express');
 const router = Router();
-const origenCtrl =  require('../controllers/origen.controllers')
+const destinoCtrl =  require('../controllers/Destino.controllers')
 
 //Listar 
-router.get('/',origenCtrl.getOrigenes);
+router.get('/',destinoCtrl.getDestinos);
 //Crear 
-router.post('/',origenCtrl.deleteOrigen);
+router.post('/',destinoCtrl.deleteDestino);
 //Listar 
-router.get('/:id',origenCtrl.getOrigen);
+router.get('/:id',destinoCtrl.getDestino);
 //Editar 
-router.put('/:id',origenCtrl.editOrigen);
+router.put('/:id',destinoCtrl.editDestino);
 //Eliminar 
-router.delete('/:id',origenCtrl.deleteOrigen);
-
-
+router.delete('/:id',destinoCtrl.deleteDestino);
 module.exports = router;
