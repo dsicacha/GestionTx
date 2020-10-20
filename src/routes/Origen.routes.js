@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const origenCtrl =  require('../controllers/origen.controllers')
+const origenCtrl =  require('../controllers/Origen.controllers')
 
 //Listar 
 router.get('/',origenCtrl.getOrigenes);

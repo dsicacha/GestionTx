@@ -26,4 +26,4 @@ const destinoSchema = new Schema({
 })
 
 
-module.exports = model('employee',employeeSchema);
+module.exports = model('destino',destinoSchema);
