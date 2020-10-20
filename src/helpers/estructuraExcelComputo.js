@@ -30,6 +30,21 @@ var titulosPartnerPA = {
   E25: "Key Name",
 };
 
+let valoresComunnity = {
+  B10: "",
+  C10: "",
+  D10_E10: "",
+  B12_C12: "",
+  D12_E12: "",
+  B14: "",
+  C14: "",
+  D14_E14: "",
+  B16_C16: "",
+  D16_E16: "",
+
+}
+
+
 var titulosPartnerCS = {
   B29: "Action",
   C29: "Community",
