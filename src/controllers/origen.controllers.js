@@ -2,6 +2,7 @@ const origenCtrl = {};
 
 const origen = require('../models/origen');
 
+
 origenCtrl.getOrigenes = async (req, res) =>{
     const origenes = await origen.find();
     res.json(Origenes);
