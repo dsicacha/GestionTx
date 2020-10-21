@@ -5,7 +5,7 @@ const destinoCtrl =  require('../controllers/Destino.controllers')
 //Listar 
 router.get('/',destinoCtrl.getDestinos);
 //Crear 
-router.post('/',destinoCtrl.deleteDestino);
+router.post('/',destinoCtrl.createDestino);
 //Listar 
 router.get('/:id',destinoCtrl.getDestino);
 //Editar 

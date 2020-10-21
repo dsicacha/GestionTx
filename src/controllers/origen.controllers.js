@@ -4,12 +4,14 @@ const origen = require('../models/origen');
 
 origenCtrl.getOrigenes = async (req, res) =>{
     const origenes = await origen.find();
-    res.json(Origenes);
+    res.json(origenes);
 };
 origenCtrl.createOrigen = async (req, res) =>{
+    console.log(req.body);
     const newOrigen = new origen(req.body);
-    await newOrigen.save();
-    res.send({message:'Origen Created'});
+    
+    const result = await newOrigen.save();
+    res.send(result);
     
 };
 
