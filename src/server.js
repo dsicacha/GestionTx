@@ -17,7 +17,8 @@ app.use(express.urlencoded({extended:false}));
 /*app.use("/api/gestionTx",require('./routes/transmisiones.routes'))*/
 app.use("/",require('./routes/Excel.routes'));
 app.use("/origen",require('./routes/Origen.routes'))
-app.use("/destino",require('./routes/Destino.routes'))       
+app.use("/destino",require('./routes/Destino.routes'))  
+app.use("/transmision",require('./routes/Transmision.routes'))      
 
 
 module.exports = app;
