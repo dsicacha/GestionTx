@@ -2,7 +2,6 @@ const origenCtrl = {};
 
 const origen = require('../models/origen');
 
-
 origenCtrl.getOrigenes = async (req, res) =>{
     const origenes = await origen.find();
     res.json(Origenes);
@@ -28,5 +27,7 @@ origenCtrl.deleteOrigen = async (req, res) =>{
     await origen.findByIdAndDelete(req.params.id);
     res.json({status: 'Origen Deleted'});
 };
+
+
 
 module.exports = origenCtrl;
