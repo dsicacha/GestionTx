@@ -8,6 +8,13 @@ router.get('/',transmisionCtrl.getTransmisiones);
 //Crear
 router.post('/',transmisionCtrl.createTransmision);
 
+//Listar 
+router.get('/:id',transmisionCtrl.getTransmision);
+//Editar 
+router.put('/:id',transmisionCtrl.editTransmision);
+//Eliminar 
+router.delete('/:id',transmisionCtrl.deleteTransmision);
+
 
 
 
