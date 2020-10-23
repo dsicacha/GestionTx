@@ -41,9 +41,7 @@ let valoresComunnity = {
   D14_E14: "",
   B16_C16: "",
   D16_E16: "",
-
-}
-
+};
 
 var titulosPartnerCS = {
   B29: "Action",
@@ -82,9 +80,9 @@ var titulosAccounts = {
   D47_E47: "Permissions",
   B49: "Given Name",
   C49: "Surname",
-  D49:"Email",
-  E49:"Identity"
-}
+  D49: "Email",
+  E49: "Identity",
+};
 
 const celdaTitComputo = "B1:E3";
 const celdaAlertCampos = "B5:E5";
@@ -126,6 +124,54 @@ estructura.encabezadoComputo = (worksheet) => {
     estilos.border,
     true
   );
+
+  return worksheet;
+};
+
+estructura.valoresCommunity = (worksheet, origen, destino) => {
+
+  valoresComunnity["B10"] = "Create";
+  valoresComunnity["C10"] =
+    origen["filial"] + "_" + origen["dominio"] + "_" + origen["subdominio"];
+  valoresComunnity["D10_E10"] = "Partner Listens for Protocol Connections";
+  valoresComunnity["B12_C12"] =
+    "BANCOLOMBIA SSH/SFTP ; BANCOLOMBIA:CONNECT-DIRECT ";
+  valoresComunnity["D12_E12"] = "No";
+
+  valoresComunnity["B14"] = "Create";
+  valoresComunnity["C14"] =
+    destino["filial"] + "_" + destino["dominio"] + "_" + destino["subdominio"];
+  valoresComunnity["D14_E14"] = "Partner Listens for Protocol Connections";
+  valoresComunnity["B16_C16"] =
+    "BANCOLOMBIA SSH/SFTP ; BANCOLOMBIA:CONNECT-DIRECT ";
+  valoresComunnity["D16_E16"] = "No";
+
+  for (const celda in valoresComunnity) {
+    var ind = celda.indexOf("_");
+    var idCelda = "";
+
+
+    if (ind > 0) {
+      idCelda = celda.replace("_", ":");
+      worksheet.mergeCells(idCelda);
+      /*idCelda = idCelda.substring(0, ind);*/
+    } else {
+      idCelda = celda;
+    }
+
+    asignarEstilo(
+      worksheet,
+      idCelda,
+      valoresComunnity[celda],
+      estilos.letraValores,
+      estilos.fondoBlanco,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      false
+    );
+
+    
+  }
 
   return worksheet;
 };

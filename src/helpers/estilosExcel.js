@@ -41,6 +41,14 @@ estilos.letraTitPrincipal = {
     size: 10,
     italic: false,
   };
+
+  estilos.letraValores = {
+    name: "Calibri",
+    color: { argb: "000000" },
+    family: 2,
+    size: 11,
+    italic: false,
+  };
   
   estilos.fondoCeldas = {
     type: "pattern",
@@ -56,6 +64,12 @@ estilos.letraTitPrincipal = {
     bgColor: { argb: "305496" },
   };
 
+  estilos.fondoBlanco = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "FFFFFF" },
+    bgColor: { argb: "FFFFFF" },
+  };
   estilos.fondoVerde = {
     type: "pattern",
     pattern: "solid",
