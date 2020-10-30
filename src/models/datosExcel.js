@@ -34,18 +34,20 @@ manejoExcel.crearExcel = async(res,id) => {
     var hojaAccesosPlataformas = workbook.addWorksheet("AccesosPlataformas"); 
 
   /*Asignar estructura Computo  pestaña computo*/
-  estructuraComputo.encabezadoComputo(hojaComputo);  
-  estructuraComputo.community(hojaComputo, 2);  
+  estructuraComputo.encabezadoComputo(hojaComputo);
+  estructuraComputo.tituloComponentes(hojaComputo);  
+  estructuraComputo.community(hojaComputo);  
   estructuraComputo.partnerProducerA(hojaComputo); 
   estructuraComputo.partnerConsumerS(hojaComputo);  
   estructuraComputo.RoutingChannel(hojaComputo);  
   estructuraComputo.Accounts(hojaComputo); 
 
   /**Llenar valores de pestaña computo */
-  estructuraComputo.valoresCommunity(hojaComputo,origen,destino);
+ estructuraComputo.valoresCommunity(hojaComputo,consultaOrigen,consultaDestino);
 
 /*Asignar estructura Control de accesos  pestaña control de accesos*/
-  estructuraAccesos.encabezadoAccesos(hojaAccesosPlataformas);
+  estructuraAccesos.encabezadoAccesos(hojaAccesosPlataformas);  
+  estructuraAccesos.tituloComponentes(hojaAccesosPlataformas);
   estructuraAccesos.userIdentityKeyCreate(hojaAccesosPlataformas);
   estructuraAccesos.userIdentityKeyExport(hojaAccesosPlataformas);
   estructuraAccesos.KnowHostKey(hojaAccesosPlataformas);

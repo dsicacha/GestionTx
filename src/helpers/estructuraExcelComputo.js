@@ -1,110 +1,17 @@
-const excel = require("exceljs");
+const config = require("../config/configComputoAS");
 const estilos = require("./estilosExcel");
 const estructura = {};
 
-var titulosComunidad = {
-  B9: "Action",
-  C9: "Name",
-  D9_E9: "Make Protocols Available to Partners",
-  B11_C11: "Select from Available:",
-  D11_E11:
-    "Should member partners receive notifications that they are subscribed to?",
-};
-
-var titulosPartnerPA = {
-  B19: "Action",
-  C19: "Community",
-  D19: "Partner Name",
-  E19: "Telephone",
-  B21: "Email",
-  C21: "Authentication Type",
-  D21: "User Name",
-  E21: "Password",
-  B23: "Password Policy",
-  C23: "Authentication Host",
-  D23: "Given Name",
-  E23: "Surname",
-  B25: "Partner Role",
-  C25: "Will use either SSH/SFTP or SSH/SCP protocol to initiate connections?",
-  D25: "Will use an Authorized User Key to authenticate?",
-  E25: "Key Name",
-};
-
-let valoresComunnity = {
-  B10: "",
-  C10: "",
-  D10_E10: "",
-  B12_C12: "",
-  D12_E12: "",
-  B14: "",
-  C14: "",
-  D14_E14: "",
-  B16_C16: "",
-  D16_E16: "",
-};
-
-var titulosPartnerCS = {
-  B29: "Action",
-  C29: "Community",
-  D29: "Partner Name",
-  E29: "Telephone",
-  B31: "Email",
-  C31: "Authentication Type",
-  D31: "User Name",
-  E31: "Password",
-  B33: "Password Policy",
-  C33: "Authentication Host",
-  D33: "Given Name",
-  E33: "Surname",
-  B35: "Partner Role",
-  C35: "Will use either SSH/SFTP or SSH/SCP protocol to initiate connections?",
-  D35: "Protocol",
-  E35: "Perfil SSH",
-  B37: "Tipo de Transferencia",
-  C37: "Directorio",
-};
-
-var titulosChannel = {
-  B41: "Action",
-  C41: "Routing Channel Template",
-  D41: "Producer",
-  E41: "Consumer",
-};
-
-var titulosAccounts = {
-  B45: "Action",
-  C45: "Authentication Type",
-  D45: "User Id",
-  E45: "Authentication Host",
-  B47_C47: "Groups",
-  D47_E47: "Permissions",
-  B49: "Given Name",
-  C49: "Surname",
-  D49: "Email",
-  E49: "Identity",
-};
-
-const celdaTitComputo = "B1:E3";
-const celdaAlertCampos = "B5:E5";
-const celdaTituloComunnity = "B7:E7";
-const celdaAlertComDoble = "B8:E8";
-const celdaTituloPartnerProducerA = "B18:E18";
-const celdaTituloPartnerConsumerS = "B28:E28";
-const celdaTituloChannel = "B40:E40";
-const celdaTituloAccounts = "B44:E44";
-
-var titulo = "";
-
+/**Funcion para asignar el encabezado de la pestaña computo */
 estructura.encabezadoComputo = (worksheet) => {
   /*Asignar ancho de columnas segun constante definida */
   worksheet.columns = estilos.anchoColumnas;
 
   /*Estilo para encabezado pestaña Computo*/
-  titulo = "COMPUTO";
-  asignarEstilo(
+  estilos.asignarEstilo(
     worksheet,
-    celdaTitComputo,
-    titulo,
+    config.titComputo.computo.celda,
+    config.titComputo.computo.texto,
     estilos.letraTitPrincipal,
     estilos.fondoAzul,
     estilos.alineacionCentral,
@@ -113,11 +20,11 @@ estructura.encabezadoComputo = (worksheet) => {
   );
 
   /*Estilo para alerta de que los campos no relacionados se dejan por defecto*/
-  titulo = "LOS CAMPOS NO RELACIONADOS AQUÍ SE DEJAN POR DEFECTO";
-  asignarEstilo(
+
+  estilos.asignarEstilo(
     worksheet,
-    celdaAlertCampos,
-    titulo,
+    config.alerta.camposNoRelacionados.celda,
+    config.alerta.camposNoRelacionados.texto,
     estilos.letraAlerta,
     estilos.fondoCeldaAlerta,
     estilos.alineacionCentral,
@@ -128,75 +35,30 @@ estructura.encabezadoComputo = (worksheet) => {
   return worksheet;
 };
 
-estructura.valoresCommunity = (worksheet, origen, destino) => {
-
-  valoresComunnity["B10"] = "Create";
-  valoresComunnity["C10"] =
-    origen["filial"] + "_" + origen["dominio"] + "_" + origen["subdominio"];
-  valoresComunnity["D10_E10"] = "Partner Listens for Protocol Connections";
-  valoresComunnity["B12_C12"] =
-    "BANCOLOMBIA SSH/SFTP ; BANCOLOMBIA:CONNECT-DIRECT ";
-  valoresComunnity["D12_E12"] = "No";
-
-  valoresComunnity["B14"] = "Create";
-  valoresComunnity["C14"] =
-    destino["filial"] + "_" + destino["dominio"] + "_" + destino["subdominio"];
-  valoresComunnity["D14_E14"] = "Partner Listens for Protocol Connections";
-  valoresComunnity["B16_C16"] =
-    "BANCOLOMBIA SSH/SFTP ; BANCOLOMBIA:CONNECT-DIRECT ";
-  valoresComunnity["D16_E16"] = "No";
-
-  for (const celda in valoresComunnity) {
-    var ind = celda.indexOf("_");
-    var idCelda = "";
-
-
-    if (ind > 0) {
-      idCelda = celda.replace("_", ":");
-      worksheet.mergeCells(idCelda);
-      /*idCelda = idCelda.substring(0, ind);*/
-    } else {
-      idCelda = celda;
-    }
-
-    asignarEstilo(
+/**Funcion para asignar los titulos de componentes a la pestaña computo*/
+estructura.tituloComponentes = (worksheet) => {
+  for (const titulo in config.tituloComponentes) {
+    estilos.asignarEstilo(
       worksheet,
-      idCelda,
-      valoresComunnity[celda],
-      estilos.letraValores,
-      estilos.fondoBlanco,
-      estilos.alineacionCentralBaja,
+      config.tituloComponentes[titulo].celda,
+      config.tituloComponentes[titulo].texto,
+      estilos.letraTitulo,
+      estilos.fondoCeldaTitulo,
+      estilos.alineacionCentral,
       estilos.border,
-      false
+      true
     );
-
-    
   }
-
   return worksheet;
 };
 
-estructura.community = (worksheet, cantidadCommunity) => {
-  /*Asignar formato para titulo de Comunidad */
-  titulo = "COMMUNITY";
-  asignarEstilo(
-    worksheet,
-    celdaTituloComunnity,
-    titulo,
-    estilos.letraTitulo,
-    estilos.fondoCeldaTitulo,
-    estilos.alineacionCentralBaja,
-    estilos.border,
-    true
-  );
-
+/**Funcion para asignar en la pestaña de computo los campos requeridos en comunnity */
+estructura.community = (worksheet) => {
   /*Asignar formato para alerta comunidad */
-  titulo =
-    "**Si aparece varias veces la misma comunidad ignorarlo y crear solo una**";
-  asignarEstilo(
+  estilos.asignarEstilo(
     worksheet,
-    celdaAlertComDoble,
-    titulo,
+    config.alerta.communityDouble.celda,
+    config.alerta.communityDouble.texto,
     estilos.letraAlertaCommunity,
     estilos.fondoAzul,
     estilos.alineacionCentralBaja,
@@ -204,199 +66,12 @@ estructura.community = (worksheet, cantidadCommunity) => {
     true
   );
 
-  var regex = /(\d+)/g;
-
-  for (const celda in titulosComunidad) {
-    var ind = celda.indexOf("_");
-    var idCelda = "";
-    var idCelda2 = "";
-    var refCelda = "";
-
-    if (ind > 0) {
-      idCelda = celda.replace("_", ":");
-      worksheet.mergeCells(idCelda);
-      /*idCelda = idCelda.substring(0, ind);*/
-    } else {
-      idCelda = celda;
-    }
-
-    asignarEstilo(
+  /**Recorer titulos de community */
+  for (const campos in config.titComunidad) {
+    estilos.asignarEstilo(
       worksheet,
-      idCelda,
-      titulosComunidad[celda],
-      estilos.letraTituloCeldas,
-      estilos.fondoCeldas,
-      estilos.alineacionCentralBaja,
-      estilos.border,
-      false
-    );
-
-    if (cantidadCommunity > 1) {
-      if (ind > 0) {
-        idCelda = celda.split("_");
-        for (let i = 0; i < idCelda.length; i++) {
-          refCelda = idCelda[i].match(regex);
-          refCelda = refCelda.map(function (item) {
-            return parseInt(item, 10);
-          });
-          if (i > 0) {
-            idCelda2 += ":" + idCelda[i].substring(0, 1) + (refCelda[0] + 4);
-          } else {
-            idCelda2 += idCelda[i].substring(0, 1) + (refCelda[0] + 4);
-          }
-        }
-
-        ind = idCelda2.indexOf(":");
-
-        worksheet.mergeCells(idCelda2);
-
-        /*idCelda2 = idCelda2.substring(0, ind);*/
-      } else {
-        refCelda = celda.match(regex);
-        refCelda = refCelda.map(function (item) {
-          return parseInt(item, 10);
-        });
-
-        idCelda2 = celda.substring(0, 1) + (refCelda[0] + 4);
-      }
-
-      asignarEstilo(
-        worksheet,
-        idCelda2,
-        titulosComunidad[celda],
-        estilos.letraTituloCeldas,
-        estilos.fondoCeldas,
-        estilos.alineacionCentralBaja,
-        estilos.border,
-        false
-      );
-    }
-  }
-
-  return worksheet;
-};
-
-estructura.partnerProducerA = (worksheet) => {
-  /*Asignar formato para titulo de Partner Producer */
-  titulo = "PARTNER PRODUCER";
-  asignarEstilo(
-    worksheet,
-    celdaTituloPartnerProducerA,
-    titulo,
-    estilos.letraTitulo,
-    estilos.fondoCeldaTitulo,
-    estilos.alineacionCentral,
-    estilos.border,
-    true
-  );
-
-  for (const celda in titulosPartnerPA) {
-    var idCelda = "";
-    idCelda = celda.replace("_", ":");
-
-    asignarEstilo(
-      worksheet,
-      idCelda,
-      titulosPartnerPA[celda],
-      estilos.letraTituloCeldas,
-      estilos.fondoCeldas,
-      estilos.alineacionCentralBaja,
-      estilos.border,
-      false
-    );
-  }
-
-  return worksheet;
-};
-
-estructura.partnerConsumerS = (worksheet) => {
-  /*Asignar formato para titulo de Partner Producer */
-  titulo = "PARTNER CONSUMER";
-  asignarEstilo(
-    worksheet,
-    celdaTituloPartnerConsumerS,
-    titulo,
-    estilos.letraTitulo,
-    estilos.fondoCeldaTitulo,
-    estilos.alineacionCentral,
-    estilos.border,
-    true
-  );
-
-  for (const celda in titulosPartnerCS) {
-    var idCelda = "";
-    idCelda = celda.replace("_", ":");
-
-    asignarEstilo(
-      worksheet,
-      idCelda,
-      titulosPartnerCS[celda],
-      estilos.letraTituloCeldas,
-      estilos.fondoCeldas,
-      estilos.alineacionCentralBaja,
-      estilos.border,
-      false
-    );
-  }
-
-  return worksheet;
-};
-
-estructura.RoutingChannel = (worksheet) => {
-  /*Asignar formato para titulo de Partner Producer */
-  titulo = "ROUTING CHANNEL";
-  asignarEstilo(
-    worksheet,
-    celdaTituloChannel,
-    titulo,
-    estilos.letraTitulo,
-    estilos.fondoCeldaTitulo,
-    estilos.alineacionCentral,
-    estilos.border,
-    true
-  );
-
-  for (const celda in titulosChannel) {
-    var idCelda = "";
-    idCelda = celda.replace("_", ":");
-
-    asignarEstilo(
-      worksheet,
-      idCelda,
-      titulosChannel[celda],
-      estilos.letraTituloCeldas,
-      estilos.fondoCeldas,
-      estilos.alineacionCentralBaja,
-      estilos.border,
-      false
-    );
-  }
-
-  return worksheet;
-};
-
-estructura.Accounts = (worksheet) => {
-  /*Asignar formato para titulo de Partner Producer */
-  titulo = "ACCOUNTS";
-  asignarEstilo(
-    worksheet,
-    celdaTituloAccounts,
-    titulo,
-    estilos.letraTitulo,
-    estilos.fondoCeldaTitulo,
-    estilos.alineacionCentral,
-    estilos.border,
-    true
-  );
-
-  for (const celda in titulosAccounts) {
-    var idCelda = "";
-    idCelda = celda.replace("_", ":");
-
-    asignarEstilo(
-      worksheet,
-      idCelda,
-      titulosAccounts[celda],
+      config.titComunidad[campos].celda,
+      config.titComunidad[campos].texto,
       estilos.letraTituloCeldas,
       estilos.fondoCeldas,
       estilos.alineacionCentralBaja,
@@ -408,24 +83,99 @@ estructura.Accounts = (worksheet) => {
   return worksheet;
 };
 
-function asignarEstilo(
-  worksheet,
-  idCelda,
-  value,
-  font,
-  fill,
-  alignment,
-  border,
-  merge
-) {
-  if (merge) {
-    worksheet.mergeCells(idCelda);
+/**funcion para asignar en la pestaña de computo los campos requeridos para el partner producer Aplicacion */
+estructura.partnerProducerA = (worksheet) => {
+  /**Recorer titulos de partnerProducerA */
+  for (const campos in config.titPartnerPA) {
+    estilos.asignarEstilo(
+      worksheet,
+      config.titPartnerPA[campos].celda,
+      config.titPartnerPA[campos].texto,
+      estilos.letraTituloCeldas,
+      estilos.fondoCeldas,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      true
+    );
   }
-  worksheet.getCell(idCelda).value = value;
-  worksheet.getCell(idCelda).font = font;
-  worksheet.getCell(idCelda).fill = fill;
-  worksheet.getCell(idCelda).alignment = alignment;
-  worksheet.getCell(idCelda).border = border;
-}
+
+  return worksheet;
+};
+
+/**funcion para asignar en la pestaña de computo los campos requeridos para el partner Consumer Servidor*/
+estructura.partnerConsumerS = (worksheet) => {
+  for (const campos in config.titPartnerCS) {
+    estilos.asignarEstilo(
+      worksheet,
+      config.titPartnerCS[campos].celda,
+      config.titPartnerCS[campos].texto,
+      estilos.letraTituloCeldas,
+      estilos.fondoCeldas,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      true
+    );
+  }
+  return worksheet;
+};
+
+/**funcion para asignar en la pestaña de computo los campos requeridos en routing channel */
+estructura.RoutingChannel = (worksheet) => {
+  for (const campos in config.titChannel) {
+    estilos.asignarEstilo(
+      worksheet,
+      config.titChannel[campos].celda,
+      config.titChannel[campos].texto,
+      estilos.letraTituloCeldas,
+      estilos.fondoCeldas,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      true
+    );
+  }
+
+  return worksheet;
+};
+
+/**funcion para asignar en la pestaña de computo los campos requeridos en Accounts */
+estructura.Accounts = (worksheet) => {
+  for (const campos in config.titAccounts) {
+    estilos.asignarEstilo(
+      worksheet,
+      config.titAccounts[campos].celda,
+      config.titAccounts[campos].texto,
+      estilos.letraTituloCeldas,
+      estilos.fondoCeldas,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      true
+    );
+  }
+
+  return worksheet;
+};
+
+/**funcion para asignar en la pestaña de computo los valores requeridos en Community */
+estructura.valoresCommunity = (worksheet, origen, destino) => {
+  config.valCommunity.name.texto =
+    origen["filial"] + "_" + origen["dominio"] + "_" + origen["subdominio"];
+  config.valCommunity.name2.texto =
+    destino["filial"] + "_" + destino["dominio"] + "_" + destino["subdominio"];
+
+  for (const campos in config.valCommunity) {
+    estilos.asignarEstilo(
+      worksheet,
+      config.valCommunity[campos].celda,
+      config.valCommunity[campos].texto,
+      estilos.letraValores,
+      estilos.fondoBlanco,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      true
+    );
+  }
+
+  return worksheet;
+};
 
 module.exports = estructura;

@@ -1,6 +1,26 @@
 const excel = require("exceljs");
 const estilos ={};
 
+estilos.asignarEstilo=(
+  worksheet,
+  idCelda,
+  value,
+  font,
+  fill,
+  alignment,
+  border,
+  merge
+)=>{
+  if (merge) {
+    worksheet.mergeCells(idCelda);
+  }
+  worksheet.getCell(idCelda).value = value;
+  worksheet.getCell(idCelda).font = font;
+  worksheet.getCell(idCelda).fill = fill;
+  worksheet.getCell(idCelda).alignment = alignment;
+  worksheet.getCell(idCelda).border = border;
+}
+
 estilos.letraTitPrincipal = {
     name: "Arial Black",
     color: { argb: "FFFFFF" },
