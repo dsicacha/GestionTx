@@ -15,7 +15,7 @@ const manejoExcel = {};
 
 manejoExcel.crearExcel = async(res,id) => {
 
-   consultaTransmision =  await transmision.findById(id);
+  consultaTransmision =  await transmision.findById(id);
   consultaOrigen = await origen.findById(consultaTransmision['origen']);
   consultaDestino = await destino.findById(consultaTransmision['destino']);
     
@@ -33,7 +33,7 @@ manejoExcel.crearExcel = async(res,id) => {
     /*Crear Hoja de excel AccesosPlataformas*/
     var hojaAccesosPlataformas = workbook.addWorksheet("AccesosPlataformas"); 
 
-  /*Asignar estructuraComputo  pestaña computo*/
+  /*Asignar estructura Computo  pestaña computo*/
   estructuraComputo.encabezadoComputo(hojaComputo);  
   estructuraComputo.community(hojaComputo, 2);  
   estructuraComputo.partnerProducerA(hojaComputo); 
@@ -44,7 +44,7 @@ manejoExcel.crearExcel = async(res,id) => {
   /**Llenar valores de pestaña computo */
   estructuraComputo.valoresCommunity(hojaComputo,origen,destino);
 
-
+/*Asignar estructura Control de accesos  pestaña control de accesos*/
   estructuraAccesos.encabezadoAccesos(hojaAccesosPlataformas);
   estructuraAccesos.userIdentityKeyCreate(hojaAccesosPlataformas);
   estructuraAccesos.userIdentityKeyExport(hojaAccesosPlataformas);

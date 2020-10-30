@@ -2,8 +2,6 @@ const excel = require('../models/datosExcel');
 
 const excelCtrl = {};
 
-
-
 excelCtrl.download =  async (req, res) => {
   
   res.setHeader(
