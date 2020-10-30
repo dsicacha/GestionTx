@@ -16,9 +16,11 @@ app.use(express.urlencoded({extended:false}));
 //Routes
 /*app.use("/api/gestionTx",require('./routes/transmisiones.routes'))*/
 app.use("/api/excel/download",require('./routes/Excel.routes'));
-app.use("/origen",require('./routes/Origen.routes'))
-app.use("/destino",require('./routes/Destino.routes'))  
-app.use("/transmision",require('./routes/Transmision.routes'))      
+app.use("/origen",require('./routes/Origen.routes'));
+app.use("/destino",require('./routes/Destino.routes'));
+app.use("/transmision",require('./routes/Transmision.routes'));
+app.use("/usuario",require('./routes/usuario.routes'));     
+
 
 
 module.exports = app;

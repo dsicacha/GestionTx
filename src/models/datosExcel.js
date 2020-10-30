@@ -1,27 +1,37 @@
 const excel = require("exceljs");
 const estructuraComputo = require("../helpers/estructuraExcelComputo");
 const estructuraAccesos = require("../helpers/estructuraExcelAccesos");
-const origen = require("./origen");
-const destino = require("./destino");
+const transmision = require('../models/transmision');
+const origen = require('../models/origen');
+const destino =  require('../models/destino');
 
+let consultaTransmision;
+let consultaOrigen;
+let consultaDestino;
 
-  /*Crear libro de excel*/
-  let workbook = new excel.Workbook();
-
-  /*Asignar propiedades de creacion del libro*/
-  workbook.creator = "DHL - Fedex";
-  workbook.created = new Date();
-
-  /*Crear Hoja de excel Computo*/
-  let hojaComputo = workbook.addWorksheet("Computo");
-
-  /*Crear Hoja de excel AccesosPlataformas*/
-  let hojaAccesosPlataformas = workbook.addWorksheet("AccesosPlataformas");
 
 
 const manejoExcel = {};
 
-manejoExcel.crearExcel = (res) => {
+manejoExcel.crearExcel = async(res,id) => {
+
+   consultaTransmision =  await transmision.findById(id);
+  consultaOrigen = await origen.findById(consultaTransmision['origen']);
+  consultaDestino = await destino.findById(consultaTransmision['destino']);
+    
+
+    /*Crear libro de excel*/
+    var workbook = new excel.Workbook();
+
+    /*Asignar propiedades de creacion del libro*/
+    workbook.creator = "DHL - Fedex";
+    workbook.created = new Date();
+  
+    /*Crear Hoja de excel Computo*/
+    var hojaComputo = workbook.addWorksheet("Computo");
+  
+    /*Crear Hoja de excel AccesosPlataformas*/
+    var hojaAccesosPlataformas = workbook.addWorksheet("AccesosPlataformas"); 
 
   /*Asignar estructuraComputo  pestaña computo*/
   estructuraComputo.encabezadoComputo(hojaComputo);  
@@ -30,6 +40,9 @@ manejoExcel.crearExcel = (res) => {
   estructuraComputo.partnerConsumerS(hojaComputo);  
   estructuraComputo.RoutingChannel(hojaComputo);  
   estructuraComputo.Accounts(hojaComputo); 
+
+  /**Llenar valores de pestaña computo */
+  estructuraComputo.valoresCommunity(hojaComputo,origen,destino);
 
 
   estructuraAccesos.encabezadoAccesos(hojaAccesosPlataformas);
@@ -44,12 +57,6 @@ manejoExcel.crearExcel = (res) => {
   return workbook.xlsx.write(res);
 };
 
-manejoExcel.ValoresComputo=(origen,destino)=>{
-  estructuraComputo.valoresCommunity(hojaComputo,origen,destino);
 
-
-
-  
-}
 
 module.exports = manejoExcel;

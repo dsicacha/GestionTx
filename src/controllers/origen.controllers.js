@@ -6,10 +6,8 @@ origenCtrl.getOrigenes = async (req, res) =>{
     const origenes = await origen.find();
     res.json(origenes);
 };
-origenCtrl.createOrigen = async (req, res) =>{
-    console.log(req.body);
-    const newOrigen = new origen(req.body);
-    
+origenCtrl.createOrigen = async (req, res) =>{    
+    const newOrigen = new origen(req.body);    
     const result = await newOrigen.save();
     res.send(result);
     

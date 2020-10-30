@@ -1,32 +1,10 @@
 const excel = require('../models/datosExcel');
-const transmision = require('../models/transmision');
-const origen = require('../models/origen');
-const destino =  require('../models/destino');
-
 
 const excelCtrl = {};
-let consultaTransmision;
-let consultaOrigen;
-let consultaDestino;
+
 
 
 excelCtrl.download =  async (req, res) => {
-
-  consultaTransmision =  await transmision.findById(req.params.id);
-  consultaOrigen = await origen.findById(consultaTransmision['origen']);
-  consultaDestino = await destino.findById(consultaTransmision['destino']);
-    
-  excel.ValoresComputo(consultaOrigen,consultaDestino);
-
-
-
-  
-  
-
-  
-  
-  
-
   
   res.setHeader(
     "Content-Type",
@@ -37,7 +15,7 @@ excelCtrl.download =  async (req, res) => {
     "attachment; filename=" + "GestionTx.xlsx"
   );
 
-  excel.crearExcel(res).then(function () {
+  excel.crearExcel(res,req.params.id).then(function () {
     res.status(200).end();
   });
   
