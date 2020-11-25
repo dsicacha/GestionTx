@@ -1,5 +1,6 @@
 const valores = {};
 
+
 valores.titAccesos={
     accesos:{ celda: "B1:E3", texto: "ACCESO PLATAFORMAS" }
 }
