@@ -14,7 +14,6 @@ app.use(express.urlencoded({extended:false}));
 /*app.use(cors());*/
 
 //Routes
-/*app.use("/api/gestionTx",require('./routes/transmisiones.routes'))*/
 app.use("/download",require('./routes/Excel.routes'));
 app.use("/origen",require('./routes/Origen.routes'));
 app.use("/destino",require('./routes/Destino.routes'));
