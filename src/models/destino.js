@@ -22,7 +22,7 @@ const destinoSchema = new Schema({
     Servidor:{type:String,required:true},
     usuarioConexionDestino:{type:String,required:true},
     metodoAutenticacion:{type:String,required:true},
-    ubicacionServidor:{type:String,required:true},
+    UbicacionServidor:{type:String,required:true},
     rutaEntrega:{type:String,required:true}
     
 },{

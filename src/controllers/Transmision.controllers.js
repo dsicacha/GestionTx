@@ -9,6 +9,7 @@ transmisionCtrl.getTransmisiones = async (req, res) =>{
 
 transmisionCtrl.createTransmision = async (req, res) =>{
     const newTransmision = new transmision(req.body);
+    console.log(req.body);
     await newTransmision.save();
     res.send({message:'Transmision Created'});
 }

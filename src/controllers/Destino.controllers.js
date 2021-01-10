@@ -11,8 +11,9 @@ destinoCtrl.getDestinos = async (req, res) =>{
 
 destinoCtrl.createDestino = async (req, res) =>{
     const newDestino = new destino(req.body);
+    
     const result = await newDestino.save();
-    res.send(result);
+    res.send(result._id);
 };
 
 destinoCtrl.getDestino = async (req, res) =>{

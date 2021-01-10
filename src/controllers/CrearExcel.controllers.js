@@ -7,6 +7,7 @@ excelCtrl.download =  async (req, res) => {
   res.setHeader(
     "Content-Type",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    
   );
   res.setHeader(
     "Content-Disposition",

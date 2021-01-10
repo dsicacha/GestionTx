@@ -9,7 +9,7 @@ origenCtrl.getOrigenes = async (req, res) =>{
 origenCtrl.createOrigen = async (req, res) =>{    
     const newOrigen = new origen(req.body);    
     const result = await newOrigen.save();
-    res.send(result);
+    res.send(result._id);
     
 };
 
