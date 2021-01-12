@@ -44,6 +44,8 @@ manejoExcel.crearExcel = async(res,id) => {
 
   /**Llenar valores de pestaña computo */
  estructuraComputo.valoresCommunity(hojaComputo,consultaOrigen,consultaDestino);
+ estructuraComputo.valoresPartnerPA(hojaComputo,consultaOrigen);
+ estructuraComputo.valoresPartnerCS(hojaComputo,consultaDestino);
 
 /*Asignar estructura Control de accesos  pestaña control de accesos*/
   estructuraAccesos.encabezadoAccesos(hojaAccesosPlataformas);  

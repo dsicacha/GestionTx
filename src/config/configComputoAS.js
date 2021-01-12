@@ -133,4 +133,55 @@ valores.valCommunity = {
   notification2: {celda: "D16:E16",texto: "No",},
 };
 
+valores.valPartnerPA = {
+  action: { celda: "B20", texto: "" },
+  community: { celda: "C20", texto: "" },
+  partnerName: { celda: "D20", texto: "" },
+  telephone: { celda: "E20", texto: "" },
+  email: { celda: "B22", texto: "" },
+  autType: { celda: "C22", texto: "External" },
+  userName: { celda: "D22", texto: "" },
+  password: { celda: "E22", texto: "password" },
+  passwordPolicy: { celda: "B24", texto: "" },
+  autHost: { celda: "C24", texto: "" },
+  givenName: { celda: "D24", texto: "" },
+  surName: { celda: "E24", texto: "" },
+  partnerRole: { celda: "B26", texto: "Producer of data. Consumer of dara - partner will iniciate the connection to consume data" },
+  sftpOScp: {
+    celda: "C26",
+    texto:
+      "",
+  },
+  keyUseraut: {
+    celda: "D26",
+    texto: "",
+  },
+  keyName: { celda: "E26", texto: "" },
+};
+
+valores.valPartnerCS = {
+  action: { celda: "B30", texto: "" },
+  community: { celda: "C30", texto: "" },
+  partnerName: { celda: "D30", texto: "" },
+  telephone: { celda: "E30", texto: "" },
+  email: { celda: "B32", texto: "" },
+  autType: { celda: "C32", texto: "External" },
+  userName: { celda: "D32", texto: "" },
+  password: { celda: "E32", texto: "password" },
+  passwordPolicy: { celda: "B34", texto: "" },
+  autHost: { celda: "C34", texto: "" },
+  givenName: { celda: "D34", texto: "" },
+  surName: { celda: "E34", texto: "" },
+  partnerRole: { celda: "B36", texto: "Producer of data. Consumer of data - partner will listen for a connection to consume data" },
+  sftpOScp: {
+    celda: "C36",
+    texto:
+      "No",
+  },
+  protocol: { celda: "D36", texto: "" },
+  perfilSsh: { celda: "E36", texto: "" },
+  TipoTransferencia: { celda: "B38", texto: "" },
+  directorio: { celda: "C38", texto: "" },
+};
+
 module.exports = valores;

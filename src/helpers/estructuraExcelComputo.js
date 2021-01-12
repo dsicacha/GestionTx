@@ -178,4 +178,119 @@ estructura.valoresCommunity = (worksheet, origen, destino) => {
   return worksheet;
 };
 
+estructura.valoresPartnerPA = (worksheet, origen) => {
+
+  config.valPartnerPA.action.texto = 'Create';
+  config.valPartnerPA.community.texto = config.valCommunity.name.texto;
+  if (origen["UbicacionServidor"] == 'Interna') {
+    config.valPartnerPA.partnerName.texto = 'L_' + origen['codigoMac'] + '_' + origen['proceso'] + '_' + origen['usuarioCnx'];
+  } else {
+    config.valPartnerPA.partnerName.texto = 'E_' + origen['codigoMac'] + '_' + origen['proceso'] + '_' + origen['usuarioCnx'];
+  }
+
+  config.valPartnerPA.telephone.texto = origen['telefono'];
+  config.valPartnerPA.email.texto = origen['email'];
+  config.valPartnerPA.userName.texto = origen['usuarioCnx'];
+
+  if (origen["ambiente"] == "Produccion") {
+    config.valPartnerPA.autHost.texto = 'Directorio Activo';
+  } else {
+    config.valPartnerPA.autHost.texto = 'LDAP Ambientes BC';
+  }
+
+  config.valPartnerPA.givenName.texto = origen['proceso'] + '_' + origen['codigoMac'];
+  config.valPartnerPA.surName.texto = origen["usuarioCnx"];
+
+  if (origen['metodoAutenticacion'] == 'Llaves') {
+    config.valPartnerPA.sftpOScp.texto = 'Yes';
+    config.valPartnerPA.keyUseraut.texto = 'Yes';
+    config.valPartnerPA.keyName.texto = 'AUK_' + origen['codigoMac'] + '_' + origen['usuarioCnx'];
+  } else {
+    config.valPartnerPA.sftpOScp.texto = 'No';
+    config.valPartnerPA.keyUseraut.texto = 'No';
+    config.valPartnerPA.keyName.texto = 'N/A'
+  }
+
+
+  for (const campos in config.valPartnerPA) {
+    estilos.asignarEstilo(
+      worksheet,
+      config.valPartnerPA[campos].celda,
+      config.valPartnerPA[campos].texto,
+      estilos.letraValores,
+      estilos.fondoBlanco,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      true
+    );
+  }
+
+  return worksheet;
+};
+
+estructura.valoresPartnerCS = (worksheet, destino) => {
+  let perfil = '';
+  let servidor = "";
+
+  config.valPartnerCS.action.texto = 'Create';
+  config.valPartnerCS.community.texto = config.valCommunity.name2.texto;
+  if (destino["UbicacionServidor"] == 'Interna') {
+    config.valPartnerCS.partnerName.texto = 'L_' + destino['codigoMac'] + '_' + destino['proceso'] + '_' + destino['usuarioCnx'];
+    perfil = 'L_';
+  } else {
+    config.valPartnerCS.partnerName.texto = 'E_' + destino['codigoMac'] + '_' + destino['proceso'] + '_' + destino['usuarioCnx'];
+    perfil = 'E_';
+  }
+
+  config.valPartnerCS.telephone.texto = destino['telefono'];
+  config.valPartnerCS.email.texto = destino['email'];
+  config.valPartnerCS.userName.texto = destino['usuarioCnx'];
+
+
+  if (destino["ambiente"] == "Produccion") {
+    config.valPartnerCS.autHost.texto = 'Directorio Activo';
+  } else {
+    config.valPartnerCS.autHost.texto = 'LDAP Ambientes BC';
+  }
+
+  config.valPartnerCS.givenName.texto = destino['proceso'] + '_' + destino['codigoMac'];
+  config.valPartnerCS.surName.texto = destino["usuarioCnx"];
+  config.valPartnerCS.sftpOScp.texto = 'No';
+  
+  if (destino['protocolo']='SFTP') {
+    config.valPartnerCS.protocol.texto = 'Listen For BANCOLOMBIA SSH/SFTP Connections';  
+  }else if (destino['protocolo']='CD') {
+    config.valPartnerCS.protocol.texto = 'Listen For BANCOLOMBIA SSH/SFTP Connections'    
+  }
+  
+  servidor = destino['Servidor'];
+
+  if (destino['tipoSvr'] == 'DNS') {
+
+    servidor = servidor.toUpperCase().substring(0, servidor.indexOf('.'))
+    perfil += servidor + '_' + destino['usuarioCnx'] + '_' + destino['usuarioConexionDestino'];
+  } else {
+    perfil += servidor + '_' + destino['usuarioCnx'] + '_' + destino['usuarioConexionDestino'];
+  }
+
+  config.valPartnerCS.perfilSsh.texto = perfil;
+
+
+  for (const campos in config.valPartnerCS) {
+    console.log(config.valPartnerCS[campos].celda + ': ' + config.valPartnerCS[campos].texto);
+    estilos.asignarEstilo(
+      worksheet,
+      config.valPartnerCS[campos].celda,
+      config.valPartnerCS[campos].texto,
+      estilos.letraValores,
+      estilos.fondoBlanco,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      true
+    );
+  }
+
+  return worksheet;
+};
+
 module.exports = estructura;
