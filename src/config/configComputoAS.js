@@ -1,5 +1,18 @@
 const valores = {};
 
+valores.CeldasAPintar={
+  columna1:{celda:"A1:A55"},
+  columna2:{celda:"F1:F55"},
+  fila1:{celda:"B4:E4"},
+  fila2:{celda:"B6:E6"},
+  fila3:{celda:"B17:E17"},
+  fila4:{celda:"B27:E27"},
+  fila5:{celda:"B39:E39"},
+  fila6:{celda:"B43:E43"},
+  fila7:{celda:"B55:E55"},
+
+}
+
 valores.titComputo = {
   computo: { celda: "B1:E3", texto: "COMPUTO" }
 };
@@ -113,10 +126,10 @@ valores.titAccounts = {
   autHost: { celda: "E45", texto: "Authentication Host" },
   groups: { celda: "B47:C47", texto: "Groups" },
   permissions: { celda: "D47:E47:", texto: "Permissions" },
-  givenName: { celda: "B49", texto: "Given Name" },
-  Surname: { celda: "C49", texto: "Surname" },
-  email: { celda: "D49", texto: "Email" },
-  identity: { celda: "E49", texto: "Identity" },
+  givenName: { celda: "B53", texto: "Given Name" },
+  Surname: { celda: "C53", texto: "Surname" },
+  email: { celda: "D53", texto: "Email" },
+  identity: { celda: "E53", texto: "Identity" },
 };
 
 valores.valCommunity = {
@@ -182,6 +195,30 @@ valores.valPartnerCS = {
   perfilSsh: { celda: "E36", texto: "" },
   TipoTransferencia: { celda: "B38", texto: "" },
   directorio: { celda: "C38", texto: "" },
+};
+
+valores.valChannel = {
+  action: { celda: "B42", texto: "" },
+  template: { celda: "C42", texto: "" },
+  producer: { celda: "D42", texto: "" },
+  consumer: { celda: "E42", texto: "" },
+};
+
+valores.valAccounts = {
+  action: { celda: "B46", texto: "" },
+  autType: { celda: "C46", texto: "External" },
+  userId: { celda: "D46", texto: "" },
+  autHost: { celda: "E46", texto: "" },
+  groups: { celda: "B48:C52", texto: "" },
+  permissions01: { celda: "D48:E48:", texto: "" },
+  permissions02: { celda: "D49:E49:", texto: "" },
+  permissions03: { celda: "D50:E50:", texto: "" },
+  permissions04: { celda: "D51:E51:", texto: "" },
+  permissions05: { celda: "D52:E52:", texto: "" },
+  givenName: { celda: "B54", texto: "" },
+  surName: { celda: "C54", texto: "" },
+  email: { celda: "D54", texto: "" },
+  identity: { celda: "E54", texto: "" },
 };
 
 module.exports = valores;

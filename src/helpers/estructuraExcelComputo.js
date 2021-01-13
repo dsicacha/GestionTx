@@ -1,11 +1,21 @@
 const config = require("../config/configComputoAS");
 const estilos = require("./estilosExcel");
 const estructura = {};
+let autHost = '';
 
 /**Funcion para asignar el encabezado de la pestaña computo */
 estructura.encabezadoComputo = (worksheet) => {
   /*Asignar ancho de columnas segun constante definida */
   worksheet.columns = estilos.anchoColumnas;
+
+
+  for (const campos in config.CeldasAPintar) {
+    console.log(config.CeldasAPintar[campos].celda);
+    estilos.asignarFill(worksheet,config.CeldasAPintar[campos].celda,estilos.fondoAzulTotal,true);
+    
+  }
+
+  
 
   /*Estilo para encabezado pestaña Computo*/
   estilos.asignarEstilo(
@@ -32,8 +42,11 @@ estructura.encabezadoComputo = (worksheet) => {
     true
   );
 
+
   return worksheet;
 };
+
+
 
 /**Funcion para asignar los titulos de componentes a la pestaña computo*/
 estructura.tituloComponentes = (worksheet) => {
@@ -193,10 +206,11 @@ estructura.valoresPartnerPA = (worksheet, origen) => {
   config.valPartnerPA.userName.texto = origen['usuarioCnx'];
 
   if (origen["ambiente"] == "Produccion") {
-    config.valPartnerPA.autHost.texto = 'Directorio Activo';
+    autHost = 'Directorio Activo';
   } else {
-    config.valPartnerPA.autHost.texto = 'LDAP Ambientes BC';
+    autHost = 'LDAP Ambientes BC';
   }
+  config.valPartnerPA.autHost.texto = autHost;
 
   config.valPartnerPA.givenName.texto = origen['proceso'] + '_' + origen['codigoMac'];
   config.valPartnerPA.surName.texto = origen["usuarioCnx"];
@@ -237,47 +251,43 @@ estructura.valoresPartnerCS = (worksheet, destino) => {
   if (destino["UbicacionServidor"] == 'Interna') {
     config.valPartnerCS.partnerName.texto = 'L_' + destino['codigoMac'] + '_' + destino['proceso'] + '_' + destino['usuarioCnx'];
     perfil = 'L_';
+    config.valPartnerCS.TipoTransferencia.texto = 'Interna';
   } else {
     config.valPartnerCS.partnerName.texto = 'E_' + destino['codigoMac'] + '_' + destino['proceso'] + '_' + destino['usuarioCnx'];
     perfil = 'E_';
+    config.valPartnerCS.TipoTransferencia.texto = 'Externa';
+
   }
 
   config.valPartnerCS.telephone.texto = destino['telefono'];
   config.valPartnerCS.email.texto = destino['email'];
   config.valPartnerCS.userName.texto = destino['usuarioCnx'];
+  config.valPartnerCS.autHost.texto = autHost;
 
-
-  if (destino["ambiente"] == "Produccion") {
-    config.valPartnerCS.autHost.texto = 'Directorio Activo';
-  } else {
-    config.valPartnerCS.autHost.texto = 'LDAP Ambientes BC';
-  }
 
   config.valPartnerCS.givenName.texto = destino['proceso'] + '_' + destino['codigoMac'];
   config.valPartnerCS.surName.texto = destino["usuarioCnx"];
   config.valPartnerCS.sftpOScp.texto = 'No';
-  
-  if (destino['protocolo']='SFTP') {
-    config.valPartnerCS.protocol.texto = 'Listen For BANCOLOMBIA SSH/SFTP Connections';  
-  }else if (destino['protocolo']='CD') {
-    config.valPartnerCS.protocol.texto = 'Listen For BANCOLOMBIA SSH/SFTP Connections'    
+
+  if (destino['protocolo'] = 'SFTP') {
+    config.valPartnerCS.protocol.texto = 'Listen For BANCOLOMBIA SSH/SFTP Connections';
+  } else if (destino['protocolo'] = 'CD') {
+    config.valPartnerCS.protocol.texto = 'Listen For BANCOLOMBIA SSH/SFTP Connections'
   }
-  
+
   servidor = destino['Servidor'];
 
   if (destino['tipoSvr'] == 'DNS') {
-
     servidor = servidor.toUpperCase().substring(0, servidor.indexOf('.'))
-    perfil += servidor + '_' + destino['usuarioCnx'] + '_' + destino['usuarioConexionDestino'];
-  } else {
-    perfil += servidor + '_' + destino['usuarioCnx'] + '_' + destino['usuarioConexionDestino'];
   }
+  perfil += servidor + '_' + destino['usuarioCnx'] + '_' + destino['usuarioConexionDestino'];
 
   config.valPartnerCS.perfilSsh.texto = perfil;
 
 
+
   for (const campos in config.valPartnerCS) {
-    console.log(config.valPartnerCS[campos].celda + ': ' + config.valPartnerCS[campos].texto);
+
     estilos.asignarEstilo(
       worksheet,
       config.valPartnerCS[campos].celda,
@@ -289,6 +299,70 @@ estructura.valoresPartnerCS = (worksheet, destino) => {
       true
     );
   }
+
+  return worksheet;
+};
+
+estructura.valoresRoutingChannel = (worksheet) => {
+
+  config.valChannel.action.texto = 'Create';
+  config.valChannel.template.texto = 'Template_EST_UnkToUnk_NCons';
+  config.valChannel.producer.texto = config.valPartnerPA.partnerName.texto;
+  config.valChannel.consumer.texto = config.valPartnerCS.partnerName.texto;
+
+  for (const campos in config.valChannel) {
+
+    estilos.asignarEstilo(
+      worksheet,
+      config.valChannel[campos].celda,
+      config.valChannel[campos].texto,
+      estilos.letraValores,
+      estilos.fondoBlanco,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      true
+    );
+  }
+
+  return worksheet;
+};
+
+estructura.valoresAccounts = (worksheet, origen) => {
+
+  config.valAccounts.action.texto = 'Create';
+  config.valAccounts.userId.texto = origen['usuarioRed'];
+  config.valAccounts.autHost.texto = autHost;
+  config.valAccounts.groups.texto = 'File Gateway Partner Users ; Mailbox Browser Interface Users';
+  config.valAccounts.permissions01.texto = '/' + config.valPartnerPA.partnerName.texto + ' Mailbox';
+  config.valAccounts.permissions02.texto = '/' + config.valPartnerPA.partnerName.texto + '/Inbox' + ' Mailbox';
+  config.valAccounts.permissions03.texto = '/' + config.valPartnerPA.partnerName.texto + '/' + config.valPartnerCS.partnerName.texto + ' Mailbox';
+  config.valAccounts.permissions04.texto = 'Admin Web App Permission';
+  config.valAccounts.permissions05.texto = 'MyAccount';
+  config.valAccounts.givenName.texto = origen['nombre'];
+  config.valAccounts.surName.texto = origen['nombre'];
+  config.valAccounts.email.texto = origen['email'];
+  config.valAccounts.identity.texto = config.valPartnerPA.partnerName.texto;
+
+  for (const campos in config.valAccounts) {
+
+
+    estilos.asignarEstilo(
+      worksheet,
+      config.valAccounts[campos].celda,
+      config.valAccounts[campos].texto,
+      estilos.letraValores,
+      estilos.fondoBlanco,
+      estilos.alineacionCentralBaja,
+      estilos.border,
+      true
+    );
+  }
+
+  estilos.asignarBorder(worksheet, config.valAccounts.permissions01.celda, estilos.borderNullBtn);
+  estilos.asignarBorder(worksheet, config.valAccounts.permissions02.celda, estilos.borderNullBtnTop);
+  estilos.asignarBorder(worksheet, config.valAccounts.permissions03.celda, estilos.borderNullBtnTop);
+  estilos.asignarBorder(worksheet, config.valAccounts.permissions04.celda, estilos.borderNullBtnTop);
+  estilos.asignarBorder(worksheet, config.valAccounts.permissions05.celda, estilos.borderNullTop);
 
   return worksheet;
 };

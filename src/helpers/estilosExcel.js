@@ -21,11 +21,32 @@ estilos.asignarEstilo=(
   worksheet.getCell(idCelda).border = border;
 }
 
+estilos.asignarBorder=(worksheet,celda,border)=>{
+  worksheet.getCell(celda).border = border
+}
+
+estilos.asignarFill=(worksheet,celda,fill,merge)=>{
+
+  if (merge) {
+    worksheet.mergeCells(celda);
+  }
+
+  worksheet.getCell(celda).fill = fill;
+}
+
 estilos.letraTitPrincipal = {
     name: "Arial Black",
     color: { argb: "FFFFFF" },
     family: 2,
     size: 20,
+    italic: false,
+  };
+
+  estilos.letraAlertasAccesos = {
+    name: "Arial",
+    color: { argb: "FFFFFF" },
+    family: 2,
+    size: 10,
     italic: false,
   };
 
@@ -84,6 +105,21 @@ estilos.letraTitPrincipal = {
     bgColor: { argb: "305496" },
   };
 
+  estilos.fondoAzulTotal = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "B4C6E7" },
+    bgColor: { argb: "B4C6E7" },
+  };
+
+  estilos.fondoVerdeTotal = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "C6E0B4" },
+    bgColor: { argb: "C6E0B4" },
+  };
+
+
   estilos.fondoBlanco = {
     type: "pattern",
     pattern: "solid",
@@ -114,13 +150,36 @@ estilos.letraTitPrincipal = {
   estilos.alineacionCentral = { vertical: "middle", horizontal: "center",wrapText: true };
   estilos.alineacionCentralBaja = { vertical: "bottom", horizontal: "center",wrapText: true };
   
+  
   estilos.border = {
     top: { style: "thin" },
     left: { style: "thin" },
     bottom: { style: "thin" },
     right: { style: "thin" },
   };
+
+
+  estilos.borderNullBtn = {
+    top: { style: "thin" },
+    left: { style: "thin" },
+    bottom: { style: "" },
+    right: { style: "thin" },
+  };
   
+  estilos.borderNullTop = {
+    top: { style: "" },
+    left: { style: "thin" },
+    bottom: { style: "thin" },
+    right: { style: "thin" },
+  };
+
+  estilos.borderNullBtnTop = {
+    top: { style: "" },
+    left: { style: "thin" },
+    bottom: { style: "" },
+    right: { style: "thin" },
+  };
+
   estilos.anchoColumnas = [
     { width: 10 },
     { width: 42 },

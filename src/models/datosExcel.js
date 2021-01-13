@@ -4,6 +4,7 @@ const estructuraAccesos = require("../helpers/estructuraExcelAccesos");
 const transmision = require('../models/transmision');
 const origen = require('../models/origen');
 const destino =  require('../models/destino');
+const estructura = require("../helpers/estructuraExcelComputo");
 
 let consultaTransmision;
 let consultaOrigen;
@@ -46,6 +47,8 @@ manejoExcel.crearExcel = async(res,id) => {
  estructuraComputo.valoresCommunity(hojaComputo,consultaOrigen,consultaDestino);
  estructuraComputo.valoresPartnerPA(hojaComputo,consultaOrigen);
  estructuraComputo.valoresPartnerCS(hojaComputo,consultaDestino);
+ estructuraComputo.valoresRoutingChannel(hojaComputo);
+ estructuraComputo.valoresAccounts(hojaComputo,consultaOrigen);
 
 /*Asignar estructura Control de accesos  pestaña control de accesos*/
   estructuraAccesos.encabezadoAccesos(hojaAccesosPlataformas);  
@@ -55,6 +58,13 @@ manejoExcel.crearExcel = async(res,id) => {
   estructuraAccesos.KnowHostKey(hojaAccesosPlataformas);
   estructuraAccesos.perfilSsh(hojaAccesosPlataformas);
 
+  /**Llenar valores de pestaña accesos */
+  estructuraAccesos.valoresAlertas(hojaAccesosPlataformas,consultaDestino);
+  estructuraAccesos.valoresUserIdentityKeyCreate(hojaAccesosPlataformas,consultaDestino);
+  estructuraAccesos.valoresUserIdentityKeyExport(hojaAccesosPlataformas,consultaDestino);
+  estructuraAccesos.valoresHostkey(hojaAccesosPlataformas,consultaDestino);
+  estructuraAccesos.valoresPerfilSsh(hojaAccesosPlataformas,consultaDestino);
+  
 
 
   /*Crear Archivo para enviarlo como respuesta del GET*/
